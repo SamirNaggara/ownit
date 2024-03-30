@@ -2,6 +2,14 @@
 
 import React, { useEffect, useState } from 'react';
 
+declare global {
+	interface Window {
+	  ethereum?: {
+		request: (request: { method: string; params?: any[] | Record<string, any> }) => Promise<any>;
+	  };
+	}
+  }
+  
 const ConnectWallet: React.FC = () => {
   const [account, setAccount] = useState<string>('');
 

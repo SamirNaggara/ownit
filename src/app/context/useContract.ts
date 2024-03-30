@@ -5,6 +5,14 @@ import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+declare global {
+	interface Window {
+	  ethereum?: {
+		request: (request: { method: string; params?: any[] | Record<string, any> }) => Promise<any>;
+	  };
+	}
+  }
+  
 
 const contractABI = require("../contract/contractABI.json"); // Chemin vers l'ABI de ton contrat
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? ""; // Adresse de ton contrat déployé
