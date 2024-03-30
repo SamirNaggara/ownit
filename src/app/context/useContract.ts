@@ -46,22 +46,32 @@ export const useContract = () => {
   };
 
 export const useMintFunction = () => {
-	const contract = useContract();
-	const mintNFT = async (to: string, url: string) => {
-	  if (!contract) return;
-  
-	   // Générer un ID unique pour cet NFT en utilisant BigInt
-	   const randomHexString = '0x' + [...Array(64)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-	   const tokenId = BigInt(randomHexString);
-	  try {
-		// Appelle la fonction `safeMint` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
-		const tx = await contract.safeMint(to, tokenId, url);
-		await tx.wait(); // Attente de la confirmation de la transaction
-		console.log('NFT Minted! ID:', tokenId);
-	  } catch (error) {
-		console.error('Error minting NFT:', error);
-	  }
-	};
-  
-	return { mintNFT };
+  const contract = useContract();
+
+  const mintNFT = async (to: string, url: string) => {
+    if (!contract) {
+      return { success: false, error: 'Contract not loaded' };
+    }
+
+    // Générer un ID unique pour cet NFT en utilisant BigInt
+    const randomHexString = '0x' + [...Array(64)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+    const tokenId = BigInt(randomHexString);
+    
+    try {
+      // Appelle la fonction `safeMint` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
+      const tx = await contract.safeMint(to, tokenId, url);
+      await tx.wait(); // Attente de la confirmation de la transaction
+      console.log('NFT Minted! ID:', tokenId);
+
+      // Retourner un objet indiquant le succès et incluant l'ID du token
+      return { success: true, error: 'NFT minted successfully' };
+    } catch (error) {
+      console.error('Error minting NFT:', error);
+
+      // Retourner un objet indiquant l'échec et incluant le message d'erreur
+      return { success: false, error: 'Something unexpected happen' } ;
+    }
   };
+
+  return { mintNFT };
+};
