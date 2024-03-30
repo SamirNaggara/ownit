@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^0.15.0",
+    "@types/uuid": "^9.0.8",
     "hardhat": "^2.22.2"
   }
 }
