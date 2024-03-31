@@ -10,9 +10,15 @@ interface ApiResponse {
 }
 
 export async function GET(req: NextRequest) {
-  const address = req.nextUrl.searchParams.get('address') as string; // Cast en string pour s'assurer du type
+	const address = req.nextUrl.searchParams.get('address') as string; // Cast en string pour s'assurer du type
 
-  const provider = new ethers.JsonRpcProvider(process.env.INFURIA_ENDPOINT || '');
+
+
+
+	const provider = new ethers.InfuraProvider(
+		process.env.ETHEREUM_NETWORK,
+		process.env.INFURIA_API_KEY
+	);
   
   const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || ''; // Remplacez par l'adresse de votre contrat
   const contract = new ethers.Contract(contractAddress, ContractABI, provider);
