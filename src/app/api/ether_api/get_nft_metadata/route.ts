@@ -25,7 +25,10 @@ export async function GET(req: NextRequest) {
   }
 
   // Initialiser le provider Ethereum avec Infura
-  const provider = new ethers.JsonRpcProvider(process.env.INFURIA_ENDPOINT || '');
+	const provider = new ethers.InfuraProvider(
+		process.env.ETHEREUM_NETWORK,
+		process.env.INFURIA_API_KEY
+	);
 
 
   try {
