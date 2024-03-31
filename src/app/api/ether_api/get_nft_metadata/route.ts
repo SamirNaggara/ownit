@@ -1,16 +1,16 @@
 // pages/api/nft/[contractAddress]/[tokenId].ts
 import { ethers } from 'ethers';
-import type { NextApiRequest, NextApiResponse } from 'next';
 
 // Assurez-vous que votre ABI contient la fonction tokenURI ou une fonction équivalente.
 import ContractABI from '../../../contract/contractABI.json';
+import { NextRequest } from 'next/server';
 
 interface ApiResponse {
   metadata?: any;
   error?: string;
 }
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   // Extraction du tokenId et de l'adresse du contrat depuis l'URL de la requête
   const tokenId = req.nextUrl.searchParams.get('tokenId') as string; // Cast en string pour s'assurer du type
   const contractAddress = req.nextUrl.searchParams.get('contractAddress') as string; // Cast en string pour s'assurer du type

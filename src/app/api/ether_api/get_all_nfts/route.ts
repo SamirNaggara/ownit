@@ -1,8 +1,7 @@
 // pages/api/ether_api/get_all_nft.ts
 import { ethers } from 'ethers';
 import ContractABI from '../../../contract/contractABI.json'; // Assurez-vous que le chemin est correct et considérez d'utiliser un import dynamique si nécessaire
-import { NextRequest, NextResponse } from 'next/server';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest} from 'next/server';
 
 // Définir le type pour la réponse de l'API
 interface ApiResponse {
@@ -10,7 +9,7 @@ interface ApiResponse {
   error?: string;
 }
 
-export async function GET(req: NextApiRequest) {
+export async function GET(req: NextRequest) {
   const address = req.nextUrl.searchParams.get('address') as string; // Cast en string pour s'assurer du type
 
   const provider = new ethers.JsonRpcProvider(process.env.INFURIA_ENDPOINT || '');
@@ -29,7 +28,7 @@ export async function GET(req: NextApiRequest) {
 	// Ici on peux essyer de filtrer un peu mieux les NFT, mais j'ai pas trop compris comment
     const tokenIds = transferEvents.map(event => {
 		// Vérifiez que 'args' et 'tokenId' existent et sont du type attendu
-			return event.args.tokenId.toString();
+			return (event as any).args.tokenId.toString();
 		
 	}).filter(tokenId => tokenId !== null);
 	console.log(`Token ids: ${tokenIds}`);
