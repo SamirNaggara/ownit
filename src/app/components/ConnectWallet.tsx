@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 declare global {
 	interface Window {
@@ -14,13 +14,15 @@ const ConnectWallet: React.FC = () => {
   const [account, setAccount] = useState<string>('');
 
   // Gestionnaire pour les changements de compte
-  const handleAccountsChanged = (accounts: string[]) => {
-    if (accounts.length === 0) {
-      console.log('Please connect to MetaMask.');
-    } else if (accounts[0] !== account) {
-      setAccount(accounts[0]);
-    }
-  };
+  const handleAccountsChanged = useCallback
+  ((accounts: string[]) => {
+	// Logique pour gérer le changement de compte
+	if (accounts.length === 0) {
+		console.log('Please connect to MetaMask.');
+	  } else if (accounts[0] !== account) {
+		setAccount(accounts[0]);
+	  }
+  }, [account]);
 
   // Gestionnaire pour les changements de chaîne
   const handleChainChanged = (_chainId: string) => {
@@ -49,7 +51,7 @@ const ConnectWallet: React.FC = () => {
         }
       };
     }
-  }, [account]); // Ré-exécute l'effet si le compte change
+  }, [account, handleAccountsChanged]); // Ré-exécute l'effet si le compte change
 
   return (
     <div>
