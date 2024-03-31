@@ -18,7 +18,7 @@ const contractABI = require("../contract/contractABI.json"); // Chemin vers l'AB
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? ""; // Adresse de ton contrat déployé
 export const useContract = () => {
 	const [contract, setContract] = useState<ethers.Contract | null>(null);
-  
+	
 	useEffect(() =>  {
 
 		const initContract = async () => {
@@ -48,6 +48,7 @@ export const useContract = () => {
 export const useMintFunction = () => {
   const contract = useContract();
 
+  
   const mintNFT = async (to: string, url: string) => {
     if (!contract) {
       return { success: false, error: 'Contract not loaded' };
