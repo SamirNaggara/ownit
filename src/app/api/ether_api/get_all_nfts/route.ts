@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
 
 
 	const provider = new ethers.InfuraProvider(
-		process.env.ETHEREUM_NETWORK,
+		process.env.NEXT_PUBLIC_ETHEREUM_NETWORK,
 		process.env.INFURIA_API_KEY
 	);
   

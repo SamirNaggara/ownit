@@ -30,7 +30,7 @@ const NFTGallery: React.FC<NFTGalleryProps> = ({ tokenIds }) => {
   const router = useRouter();
 
   const handleClick = (tokenId: string) => {
-    router.push(`/nft?tokenId=${tokenId}`);
+    router.push(`/nft/${tokenId}`);
   };
 
    useEffect(() => {
