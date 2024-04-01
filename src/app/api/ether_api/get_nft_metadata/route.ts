@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 
   // Initialiser le provider Ethereum avec Infura
 	const provider = new ethers.InfuraProvider(
-		process.env.ETHEREUM_NETWORK,
+		process.env.NEXT_PUBLIC_ETHEREUM_NETWORK,
 		process.env.INFURIA_API_KEY
 	);
 
@@ -40,9 +40,7 @@ export async function GET(req: NextRequest) {
 
     // Récupérer les métadonnées à partir de l'URI
     // Notez que cette étape peut varier en fonction du format de l'URI (par exemple, si c'est une URL IPFS)
-	console.log(tokenURI)
-    const metadataUrl = tokenURI.startsWith('ipfs://') ? `https://ipfs.io/ipfs/${tokenURI.substring(7)}` : tokenURI;
-    const metadataResponse = await fetch(metadataUrl);
+    const metadataResponse = await fetch(tokenURI);
     const metadata = await metadataResponse.json();
 
 	return new Response(JSON.stringify({ metadata }), {
