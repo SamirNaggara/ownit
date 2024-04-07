@@ -10,9 +10,11 @@ const WalletInfo: React.FC = () => {
   return (
 	<div>
 			{account ? (
-			<p>Wallet Connected: {account}</p>
-			) : (
-			<p>No account connected</p>
+				<p>Wallet Connected: {account}</p>
+			) 
+			: 
+			(
+				<p>No account connected</p>
 			)}
   	</div>
   );
