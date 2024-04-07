@@ -32,6 +32,14 @@ const MyNftsPage: React.FC = () => {
 		fetchNFTs();
 	  }, [account]);
 
+	  if (!account) {
+		return (
+			<main className="p-24">
+				<p className="text-center text-xl">You need to connect your wallet to see your NFT&apos;s</p>
+			</main>
+		)
+	}
+
 	  return (
     <div>
       {account ? (
