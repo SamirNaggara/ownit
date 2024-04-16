@@ -88,8 +88,8 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
   return (
       <div className="bg-white shadow-xl rounded-lg max-w-xl mx-auto">
         <div className="p-8">
-          <h1 className="text-center text-2xl font-bold">{nftMetadata.metadata.name}</h1>
-          <p className="text-center mt-4">{nftMetadata.metadata.description}</p>
+          <h1 className="text-center text-2xl font-bold text-black">{nftMetadata.metadata.name}</h1>
+          <p className="text-center mt-4 text-black">{nftMetadata.metadata.description}</p>
         </div>
         <div className="relative w-full">
 			<Image src={nftMetadata.metadata.image} alt={nftMetadata.metadata.name} width={1000} height={1000} className='w-full'/>
@@ -118,9 +118,9 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 
 		</div>
 		<div>
-			<p  className="mb-2" title={contractAddress}>Contract address: {contractAddress.substring(0, 20)}...</p>
-			<p className="mb-2" title={params.tokenId}>Token id: {params.tokenId.substring(0, 20)}...</p>
-			<p className="mb-2">Token chain: {process.env.NEXT_PUBLIC_ETHEREUM_NETWORK}</p>
+			<p  className="mb-2 text-black" title={contractAddress}>Contract address: {contractAddress.substring(0, 20)}...</p>
+			<p className="mb-2 text-black" title={params.tokenId}>Token id: {params.tokenId.substring(0, 20)}...</p>
+			<p className="mb-2 text-black">Token chain: {process.env.NEXT_PUBLIC_ETHEREUM_NETWORK}</p>
 		
 		</div>
     </div>
