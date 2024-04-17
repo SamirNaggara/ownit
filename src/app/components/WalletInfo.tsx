@@ -10,7 +10,7 @@ const WalletInfo: React.FC = () => {
   return (
 	<div>
 			{account ? (
-				<p>Wallet Connected: {account}</p>
+				<p className='text-dark'>Wallet Connected: {account}</p>
 			) 
 			: 
 			(

@@ -11,10 +11,10 @@ const WalletButton: React.FC = () => {
     <div>
       {account ? (
         <>
-          <button onClick={disconnectWallet}>Disconnect Wallet</button>
+          <button onClick={disconnectWallet} className='text-black'>Disconnect Wallet</button>
         </>
       ) : (
-        <button onClick={connectWallet}>Connect Wallet</button>
+        <button onClick={connectWallet} className='text-black'>Connect Wallet</button>
       )}
     </div>
   );
