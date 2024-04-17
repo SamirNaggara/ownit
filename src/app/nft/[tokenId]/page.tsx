@@ -95,7 +95,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 			<Image src={nftMetadata.metadata.image} alt={nftMetadata.metadata.name} width={1000} height={1000} className='w-full'/>
         </div>
 		<div>
-			<p className='text-center mt-4'>{describeProductState(productStateValue)}</p>
+			<p className='text-center mt-4 text-black'>{describeProductState(productStateValue)}</p>
 			{productStateValue == 0 ? (
 				<button 
 				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto my-4"
