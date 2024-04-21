@@ -26,7 +26,6 @@ export default function S_contact() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // BACKEND HERE
-    console.log('Form data :', formData);
   };
 
   const handleCancel = () => {

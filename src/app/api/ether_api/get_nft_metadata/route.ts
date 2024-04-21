@@ -57,7 +57,6 @@ export async function GET(req: NextRequest) {
 	  if (!metadata) throw new Error('Failed to parse metadata.');
 
 	  const imagePinata = metadata.image +  "?pinataGatewayToken=" + process.env.PINATA_GATEWAY;
-	  console.log("image pinata : " + imagePinata);
 	return new Response(JSON.stringify({ 
 		metadata, 
 		productState: productState, 
