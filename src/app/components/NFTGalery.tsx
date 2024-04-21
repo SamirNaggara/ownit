@@ -34,6 +34,8 @@ const NFTGallery: React.FC<NFTGalleryProps> = ({ tokenIds }) => {
   };
 
    useEffect(() => {
+	if (!tokenIds || tokenIds.length === 0) return 
+	if (!contractAddress) return;
     const fetchNFTs = async () => {
       const fetchedNFTs = await Promise.all(tokenIds.map(async (tokenId) => {
         try {
