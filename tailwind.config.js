@@ -18,6 +18,7 @@ module.exports = {
           'linear-gradient(292.61deg, #C894E0 26.55%, #835DB2 119.31%)',
         'gradient-stolen':
           'linear-gradient(111.7deg, rgba(199, 48, 203, 0.59) 7.53%, rgba(131, 93, 178, 0.71) 99.04%)',
+        'intersect-image': "url('/public/img/intersect.png')",
       },
       colors: {
         'btn-purple': 'rgba(199, 48, 203, 1)',

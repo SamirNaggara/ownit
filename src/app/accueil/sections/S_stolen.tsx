@@ -1,28 +1,27 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import logo from '../../assets/img/logo.png';
-import watch from '../../assets/img/watch.png';
-import arrow from '../../assets/img/arrow.png';
-import polygon from '../../assets/img/polygon.png';
-import nftLight from '../../assets/img/NFC_light.svg';
-import shield from '../../assets/img/shield.png';
+import {
+  logo,
+  watch,
+  arrow,
+  polygon,
+  nftLight,
+  shield,
+} from '../../../../public';
 
 export default function S_stolen() {
   return (
     <div className="minh-screen px-[10%] bg-white">
-      <Link href="/accueil" className="logo-container">
-        <Image src={logo} alt="logo safeout" className="py-5" />
-      </Link>
-      <div className="py-[8%] flex items-center justify-center gap-48 flex-wrap max-2xl:gap-14">
+      <div className="py-[8%] flex items-center justify-center gap-20 flex-wrap max-2xl:gap-14">
         <div className="containerLeft text-black flex flex-col items-left justify-left gap-16">
-          <h2 className="text-[40px] font-bold">
+          <h2 className="text-[40px] max-sm:text-[28px] font-bold">
             Item stolen or lost ? <br className="invisible" />
             <span className="bg-gradient-to-l from-span-purple-light to-span-purple inline-block text-transparent bg-clip-text">
               Everyone
             </span>{' '}
             will know.
           </h2>
-          <ul className="text-[22px] font-bold list-disc w-96 text-justify">
+          <ul className="text-[22px] font-bold list-disc list-inside w-80">
             <li>Instantly change your item’s status on the blockchain.</li>
             <li>Everyone will see it after scanning your item.</li>
           </ul>
@@ -34,7 +33,7 @@ export default function S_stolen() {
               <h2 className="text-[28px] font-bold w-[80%] text-center">
                 {"It's not authentic without its digital identity"}
               </h2>
-              <div className="flex items-center gap-10">
+              <div className="flex items-center justify-center flex-wrap gap-10">
                 <div className="bg-white rounded-[15px] relative h-44 w-36 flex justify-center items-center">
                   <Image src={watch} alt="watch drawing"></Image>
                   <Image
@@ -42,7 +41,10 @@ export default function S_stolen() {
                     alt="nft light logo"
                     className="absolute bottom-2 right-4"></Image>
                 </div>
-                <Image src={arrow} alt="arrow"></Image>
+                <Image
+                  src={arrow}
+                  alt="arrow"
+                  className="max-md:w-[30%] max-sm:rotate-90"></Image>
                 <div className="bg-white rounded-[15px] relative h-44 w-36 flex justify-center items-center">
                   <Image src={polygon} alt="polygon shape"></Image>
                   <Image

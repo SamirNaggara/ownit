@@ -1,10 +1,8 @@
 'use client';
-import React, { useState, ChangeEvent, FormEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import logoWhite from '../../assets/img/logo-white.png';
-import shapeOne from '../../assets/img/contact-shape-1.png';
-import shapeTwo from '../../assets/img/contact-shape-2.png';
+import { contactShapeOne, contactShapeTwo } from '../../../../public';
 
 export default function S_contact() {
   const [formData, setFormData] = useState({
@@ -42,11 +40,10 @@ export default function S_contact() {
   };
 
   return (
-    <div className="h-screen relative px-[10%] bg-gradient-home">
-      <Link href="/accueil" className="logo-container">
-        <Image src={logoWhite} alt="logo safeout" className="py-5" />
-      </Link>
-      <form onSubmit={handleSubmit} className=" w-[50%] mx-auto mt-[8%]">
+    <div
+      className="h-screen relative px-[10%] py-[5%] bg-gradient-home"
+      id="contact">
+      <form onSubmit={handleSubmit} className=" xl:w-[50%] mx-auto mt-[8%]">
         <div className="mb-5">
           <input
             type="text"
@@ -106,12 +103,12 @@ export default function S_contact() {
             className="w-full px-3 py-4 border focus:outline-none focus:border-black/50 rounded-[15px] text-black placeholder-black text-[14px]"
             rows={4}></textarea>
           <Image
-            src={shapeOne}
+            src={contactShapeOne}
             alt="shape one"
             className="absolute bottom-0 right-0 z-[-1]"
           />
           <Image
-            src={shapeTwo}
+            src={contactShapeTwo}
             alt="shape two"
             className="absolute top-0 left-0 z-[-1]"
           />
@@ -131,12 +128,12 @@ export default function S_contact() {
             </button>
             <div className="absolute inset-0 z-0">
               <Image
-                src={shapeOne}
+                src={contactShapeOne}
                 alt="shape one"
                 className="absolute w-[80%] h-[80%] top-2 left-6"
               />
               <Image
-                src={shapeTwo}
+                src={contactShapeTwo}
                 alt="shape two"
                 className="absolute bottom-0 right-1"
               />

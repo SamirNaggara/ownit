@@ -1,20 +1,19 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import logoWhite from '../../assets/img/logo-white.png';
-import shapeOne from '../../assets/img/shape-1.png';
-import shapeTwo from '../../assets/img/shape-2.png';
-import watch from '../../assets/img/watch.png';
-import arrow from '../../assets/img/arrow.png';
-import polygon from '../../assets/img/polygon.png';
-import nftLight from '../../assets/img/NFC_light.svg';
-import shield from '../../assets/img/shield.png';
+import {
+  logoWhite,
+  shapeOne,
+  shapeTwo,
+  watch,
+  arrow,
+  polygon,
+  nftLight,
+  shield,
+} from '../../../../public';
 
 export default function S_auth() {
   return (
     <div className="minh-screen px-[10%] bg-gradient-home">
-      <Link href="/accueil" className="logo-container">
-        <Image src={logoWhite} alt="logo safeout" className="py-5" />
-      </Link>
       <div className="flex items-center justify-center gap-20 flex-wrap py-[8%]">
         <div className="containerLeft">
           <div className="relative">
@@ -23,7 +22,7 @@ export default function S_auth() {
               <h2 className="text-[28px] font-bold w-[80%] text-center">
                 {"It's not authentic without its digital identity"}
               </h2>
-              <div className="flex items-center gap-10">
+              <div className="flex items-center gap-10 flex-wrap justify-center">
                 <div className="bg-white rounded-[15px] relative h-44 w-36 flex justify-center items-center">
                   <Image src={watch} alt="watch drawing"></Image>
                   <Image
@@ -31,7 +30,10 @@ export default function S_auth() {
                     alt="nft light logo"
                     className="absolute bottom-2 right-4"></Image>
                 </div>
-                <Image src={arrow} alt="arrow"></Image>
+                <Image
+                  src={arrow}
+                  alt="arrow"
+                  className="max-md:w-[30%] max-sm:rotate-90"></Image>
                 <div className="bg-white rounded-[15px] relative h-44 w-36 flex justify-center items-center">
                   <Image src={polygon} alt="polygon shape"></Image>
                   <Image
