@@ -18,6 +18,7 @@ interface NFTMetadata {
   interface NFT {
 	tokenId: string;
 	metadata: NFTMetadata;
+	imagePinata: string
   }
   
 
@@ -75,7 +76,7 @@ const NFTGallery: React.FC<NFTGalleryProps> = ({ tokenIds }) => {
 		  </div>
   
 		  {/* Image du NFT */}<Image
-				src={nft.metadata.image}
+				src={nft?.imagePinata}
 				title={nft.metadata.name}
 				width={400}
 				height={400}
