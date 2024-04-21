@@ -4,6 +4,7 @@
 import { useEffect, useState } from 'react';
 import { useWallet } from '../context/WalletContext';
 import NFTGallery from '../components/NFTGalery';
+import WalletButton from '../components/WalletButton';
 
 const MyNftsPage: React.FC = () => {
 	const { account } = useWallet();
@@ -32,13 +33,7 @@ const MyNftsPage: React.FC = () => {
 		fetchNFTs();
 	  }, [account]);
 
-	  if (!account) {
-		return (
-			<main className="p-24">
-				<p className="text-center text-xl">You need to connect your wallet to see your NFT&apos;s</p>
-			</main>
-		)
-	}
+
 
 	  return (
     <div>
@@ -50,7 +45,7 @@ const MyNftsPage: React.FC = () => {
           {tokenIds.length > 0 && <NFTGallery tokenIds={tokenIds} />}
         </>
       ) : (
-        <div>Connect your wallet</div>
+        <WalletButton />
       )}
     </div>
   );
