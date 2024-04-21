@@ -45,7 +45,7 @@ const NFTGallery: React.FC<NFTGalleryProps> = ({ tokenIds }) => {
             throw new Error(`Erreur lors de la récupération des métadonnées pour le tokenId ${tokenId}: ${response.statusText}`);
           }
           const data = await response.json();
-          return { tokenId: tokenId, metadata: data.metadata};
+          return { tokenId: tokenId, metadata: data.metadata, imagePinata: data.imagePinata };
         } catch (error) {
           console.error(error);
           setError('Une erreur est survenue lors de la récupération des métadonnées des NFTs.');
@@ -80,7 +80,7 @@ const NFTGallery: React.FC<NFTGalleryProps> = ({ tokenIds }) => {
 				title={nft.metadata.name}
 				width={400}
 				height={400}
-				alt={`NFT ${nft.tokenId}`}
+				alt={`NFT ${nft.metadata.name}`}
 				className="transition duration-300 ease-in-out transform group-hover:scale-105 max-w-full max-h-full"
 				/>
 		</div>
