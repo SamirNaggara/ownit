@@ -92,7 +92,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
           <p className="text-center mt-4 text-black">{nftMetadata.metadata.description}</p>
         </div>
         <div className="relative w-full">
-			<Image src={nftMetadata.metadata.image} alt={nftMetadata.metadata.name} width={1000} height={1000} className='w-full'/>
+			<Image src={nftMetadata?.imagePinata} alt={nftMetadata.metadata.name} width={1000} height={1000} className='w-full'/>
         </div>
 		<div>
 			<p className='text-center mt-4 text-black'>{describeProductState(nftMetadata.productState)}</p>
