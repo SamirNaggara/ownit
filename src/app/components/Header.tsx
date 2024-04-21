@@ -25,7 +25,7 @@ export default function Header() {
       className={`z-50 bg-white flex justify-between py-5 items-center px-[10%] ${
         visible ? '' : 'fixed top-0 w-full shadow-lg'
       }`}>
-      <Link href="" className="logo-container">
+      <Link href="/" className="logo-container">
         <Image src={logo} alt="logo safeout" />
       </Link>
       <Link href="/accueil/#contact" className="demo-container">

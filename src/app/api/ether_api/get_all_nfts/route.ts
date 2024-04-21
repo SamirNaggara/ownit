@@ -37,7 +37,6 @@ export async function GET(req: NextRequest) {
 			return (event as any).args.tokenId.toString();
 		
 	}).filter(tokenId => tokenId !== null);
-	console.log(`Token ids: ${tokenIds}`);
 	
 		return new Response(JSON.stringify({ tokenIds }), {
 			status: 200, // Définir le code de statut HTTP

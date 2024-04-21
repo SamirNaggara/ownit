@@ -66,7 +66,6 @@ export const useMintFunction = () => {
       // Appelle la fonction `safeMint` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
       const tx = await contract.safeMint(to, tokenId, url);
       await tx.wait(); // Attente de la confirmation de la transaction
-      console.log('NFT Minted! ID:', tokenId);
 
       // Retourner un objet indiquant le succès et incluant l'ID du token
       return { success: true, error: 'NFT minted successfully' };

@@ -51,7 +51,6 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 				throw new Error(`Erreur lors de la récupération des métadonnées pour le tokenId ${params.tokenId}: ${response.statusText}`);
 			  }
 			  const data = await response.json();
-			  console.log(data)
 			  setNFTMetadata(data)
 			} catch (error) {
 			  setError('Une erreur est survenue lors de la récupération des métadonnées des NFTs.');
