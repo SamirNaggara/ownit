@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
 	  // Récupérer les métadonnées à partir de l'URI
 	  // Notez que cette étape peut varier en fonction du format de l'URI (par exemple, si c'est une URL IPFS)
 	  const metadataResponse = await fetch(tokenURI);
-	  if (!metadataResponse.ok) throw new Error('Failed to fetch metadata.');
+	  if (!metadataResponse.ok) throw new Error('Failed to fetch metadata. : ' + tokenURI);
 	  const metadata = await metadataResponse.json();
 	  if (!metadata) throw new Error('Failed to parse metadata.');
 
