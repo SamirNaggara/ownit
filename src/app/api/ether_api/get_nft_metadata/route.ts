@@ -32,18 +32,19 @@ export async function GET(req: NextRequest) {
 
 
   try {
-    // Initialiser le contrat avec ethers
-    const contract = new ethers.Contract(contractAddress, ContractABI, provider);
+	  // Initialiser le contrat avec ethers
+	  const contract = new ethers.Contract(contractAddress, ContractABI, provider);
+	  
+	  // Récupérer l'URI des métadonnées pour le tokenId spécifié
+	  const tokenURI = await contract.tokenURI(tokenId);
 
-    // Récupérer l'URI des métadonnées pour le tokenId spécifié
-    const tokenURI = await contract.tokenURI(tokenId);
+	  const productState  = (await contract.getProductState(tokenId)).toString();
+	  // Récupérer les métadonnées à partir de l'URI
+	  // Notez que cette étape peut varier en fonction du format de l'URI (par exemple, si c'est une URL IPFS)
+	  const metadataResponse = await fetch(tokenURI);
+	  const metadata = await metadataResponse.json();
 
-    // Récupérer les métadonnées à partir de l'URI
-    // Notez que cette étape peut varier en fonction du format de l'URI (par exemple, si c'est une URL IPFS)
-    const metadataResponse = await fetch(tokenURI);
-    const metadata = await metadataResponse.json();
-
-	return new Response(JSON.stringify({ metadata }), {
+	return new Response(JSON.stringify({ metadata, productState: productState }), {
 		status: 200, // Définir le code de statut HTTP
 		headers: {
 		'Content-Type': 'application/json', // Définir le type de contenu

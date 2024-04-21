@@ -38,6 +38,10 @@ export const useContract = () => {
 				
 				}
 			}
+			else{
+				const currentUrl = window.location.href;
+        		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
+			}
 		}
 		initContract()
 	}, []);
@@ -90,7 +94,6 @@ export const useGetProductState = () => {
 	  try {
 		// Appelle la fonction `sgetProduct state` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
 		const result = await contract.getProductState(tokenId) as number;
-  
 		// Retourner un objet indiquant le succès et incluant l'ID du token
 		return result;
 	  } catch (error) {
@@ -108,10 +111,12 @@ export const useSetProductState = () => {
 
 
 	const setProductState = async (tokenId: string, state: number) => {
+		
 		if (!contract) {
-		return -1;
+				const currentUrl = window.location.href;
+        		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
+				return -1
 		}
-
 		
 		try {
 			// Appelle la fonction `sgetProduct state` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
