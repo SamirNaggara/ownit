@@ -29,30 +29,47 @@ export async function GET(req: NextRequest) {
 		process.env.NEXT_PUBLIC_ETHEREUM_NETWORK,
 		process.env.INFURIA_API_KEY
 	);
+	if (!provider) {
+		return new Response(JSON.stringify({ error: 'Failed to get provider.' }), {
+			status: 456,
+			headers: { 'Content-Type': 'application/json' },
+		});
+	}
 
 
   try {
 	  // Initialiser le contrat avec ethers
 	  const contract = new ethers.Contract(contractAddress, ContractABI, provider);
+	  if (!contract) throw new Error('Failed to get contract.');
 	  
 	  // Récupérer l'URI des métadonnées pour le tokenId spécifié
-	  const tokenURI = await contract.tokenURI(tokenId);
+	  const tokenBrut = await contract.tokenURI(tokenId);
+	  const tokenURI = tokenBrut.toString() + "?pinataGatewayToken=" + process.env.PINATA_GATEWAY;
 
+		if (!tokenURI) throw new Error('Failed to get token URI.');
 	  const productState  = (await contract.getProductState(tokenId)).toString();
+	  if (!productState) throw new Error('Failed to get product state.');
 	  // Récupérer les métadonnées à partir de l'URI
 	  // Notez que cette étape peut varier en fonction du format de l'URI (par exemple, si c'est une URL IPFS)
 	  const metadataResponse = await fetch(tokenURI);
+	  if (!metadataResponse.ok) throw new Error('Failed to fetch metadata.');
 	  const metadata = await metadataResponse.json();
+	  if (!metadata) throw new Error('Failed to parse metadata.');
 
-	return new Response(JSON.stringify({ metadata, productState: productState }), {
+	  const imagePinata = metadata.image +  "?pinataGatewayToken=" + process.env.PINATA_GATEWAY;
+	  console.log("image pinata : " + imagePinata);
+	return new Response(JSON.stringify({ 
+		metadata, 
+		productState: productState, 
+		imagePinata: imagePinata}), {
 		status: 200, // Définir le code de statut HTTP
 		headers: {
 		'Content-Type': 'application/json', // Définir le type de contenu
 		},
 	}); 
   } catch (error) {
-    console.error(error);
-	return new Response(JSON.stringify({ error: 'Failed to fetch NFT metadata.'  }), {
+	console.log(error);
+	return new Response(JSON.stringify({ error: 'Failed to fetch NFT metadata. : ' + error }), {
 		status: 500, // Définir le code de statut HTTP
 		headers: {
 		'Content-Type': 'application/json', // Définir le type de contenu
