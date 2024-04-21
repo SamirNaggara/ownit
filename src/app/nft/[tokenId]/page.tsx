@@ -1,10 +1,10 @@
 'use client';
 
 // pages/nft/[tokenId].tsx
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useContract, useGetProductState, useSetProductState } from '@/app/context/useContract';
+import { useSetProductState } from '@/app/context/useContract';
+import { isMobile } from 'react-device-detect';
 
 interface NFTMetadata {
   name: string;
@@ -16,13 +16,13 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 	const [nftMetadata, setNFTMetadata] = useState<any | null>(null);
 	const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? ""; // Adresse de ton contrat déployé
 	const [error, setError] = useState<string | null>(null);
-	const { getProductState } = useGetProductState();
 	const { setProductState } = useSetProductState();
 	const [productStateValue, setProductStateValue] = useState<number>(-1);
 
 	const [chargement, setChargement] = useState(false);
 
 	const changeProductState = async (etat: number) => {
+
 		setChargement(true);
 	
 		try {
@@ -38,10 +38,6 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 		}
 	  };
 
-		const handleProductState = async () => {
-			setProductStateValue(await getProductState(params.tokenId));
-		}
-		handleProductState()
 	
 	
 	
@@ -55,7 +51,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 				throw new Error(`Erreur lors de la récupération des métadonnées pour le tokenId ${params.tokenId}: ${response.statusText}`);
 			  }
 			  const data = await response.json();
-
+			  console.log(data)
 			  setNFTMetadata(data)
 			} catch (error) {
 			  setError('Une erreur est survenue lors de la récupération des métadonnées des NFTs.');
@@ -66,7 +62,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 		};
 	
 		fetchNFTs();
-	  }, [params.tokenId, contractAddress, getProductState]);
+	  }, []);
 
 	if (!nftMetadata) {
 		return <div>Loading...</div>;
@@ -84,6 +80,10 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 	  }
 	  
 
+	  const handleChangeProductState = (newState: number) => {
+		changeProductState(newState)
+	  }
+			 
 	
   return (
       <div className="bg-white shadow-xl rounded-lg max-w-xl mx-auto">
@@ -95,12 +95,12 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 			<Image src={nftMetadata.metadata.image} alt={nftMetadata.metadata.name} width={1000} height={1000} className='w-full'/>
         </div>
 		<div>
-			<p className='text-center mt-4 text-black'>{describeProductState(productStateValue)}</p>
+			<p className='text-center mt-4 text-black'>{describeProductState(nftMetadata.productState)}</p>
 			{productStateValue == 0 ? (
 				<button 
 				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto my-4"
 				type="button"
-				onClick={() => changeProductState(1)}
+				onClick={() => handleChangeProductState(1)}
         		disabled={chargement}>
 					Déclarer volé
 				</button>
@@ -109,7 +109,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 				<button 
 				className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto my-4"
 				type="button"
-				onClick={() => changeProductState(0)}
+				onClick={() => handleChangeProductState(0)}
         		disabled={chargement}>
 					Déclarer légit
 				</button>
