@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useSetProductState } from '@/app/context/useContract';
 import { isMobile } from 'react-device-detect';
 // This function detects most providers injected at window.ethereum.
-import detectEthereumProvider from "@metamask/detect-provider";
 
 interface NFTMetadata {
   name: string;
