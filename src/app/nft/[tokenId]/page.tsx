@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useSetProductState } from '@/app/context/useContract';
 import { isMobile } from 'react-device-detect';
+// This function detects most providers injected at window.ethereum.
+import detectEthereumProvider from "@metamask/detect-provider";
 
 interface NFTMetadata {
   name: string;
@@ -83,6 +85,10 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 	  
 
 	  const handleChangeProductState = (newState: number) => {
+		if (isMobile && !window.ethereum) {
+			const currentUrl = window.location.href;
+        		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
+		}
 		changeProductState(newState)
 	  }
 			 
