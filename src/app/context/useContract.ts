@@ -2,8 +2,7 @@
 
 // hooks/useContract.ts
 import { ethers } from 'ethers';
-import { useEffect, useMemo, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect, useState } from 'react';
 
 declare global {
 	interface Window {
@@ -18,7 +17,8 @@ const contractABI = require("../contract/contractABI.json"); // Chemin vers l'AB
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS ?? ""; // Adresse de ton contrat déployé
 export const useContract = () => {
 	const [contract, setContract] = useState<ethers.Contract | null>(null);
-	
+	const [showConnectModal, setShowConnectModal] = useState(false);
+
 	useEffect(() =>  {
 
 		const initContract = async () => {
@@ -39,6 +39,7 @@ export const useContract = () => {
 				}
 			}
 			else{
+				setShowConnectModal(true)
 				const currentUrl = window.location.href;
         		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
 			}
@@ -46,11 +47,11 @@ export const useContract = () => {
 		initContract()
 	}, []);
   
-	return contract;
+	return {contract, showConnectModal };
   };
 
 export const useMintFunction = () => {
-  const contract = useContract();
+  const contract = useContract().contract;
 
   
   const mintNFT = async (to: string, url: string) => {
@@ -81,7 +82,7 @@ export const useMintFunction = () => {
 };
 
 export const useGetProductState = () => {
-	const contract = useContract();
+	const contract = useContract().contract;
   
 	
 	const getProductState = async (tokenId: string) => {
@@ -106,7 +107,7 @@ export const useGetProductState = () => {
   };
 
 export const useSetProductState = () => {
-	const contract = useContract();
+	const contract = useContract().contract
 
 
 	const setProductState = async (tokenId: string, state: number) => {
