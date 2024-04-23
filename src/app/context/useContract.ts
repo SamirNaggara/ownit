@@ -40,8 +40,8 @@ export const useContract = () => {
 			}
 			else{
 				setShowConnectModal(true)
-				const currentUrl = window.location.href;
-        		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
+				// const currentUrl = window.location.href;
+        		// window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
 			}
 		}
 		initContract()
