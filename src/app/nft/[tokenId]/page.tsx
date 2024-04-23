@@ -51,6 +51,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 				throw new Error(`Erreur lors de la récupération des métadonnées pour le tokenId ${params.tokenId}: ${response.statusText}`);
 			  }
 			  const data = await response.json();
+			  setProductStateValue(data?.productState)
 			  setNFTMetadata(data)
 			} catch (error) {
 			  setError('Une erreur est survenue lors de la récupération des métadonnées des NFTs.');
@@ -75,6 +76,8 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 	  };
 	  
 	  function describeProductState(state: number): string {
+		console.log("state", state)
+		console.log("productStateValue", productStateValue)
 		return productStateDescriptions[state] || "État du produit inconnu.";
 	  }
 	  
