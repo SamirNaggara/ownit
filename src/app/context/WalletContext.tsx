@@ -14,24 +14,10 @@ const WalletContext = createContext<IWalletContext | undefined>(undefined);
 export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [account, setAccount] = useState<string>('');
 
-  useEffect(() => {
-    const checkIfWalletIsConnected = async () => {
-      if (typeof window !== 'undefined' && typeof (window as any).ethereum !== 'undefined') {
-        try {
-          const accounts = await (window as any).ethereum.request({ method: 'eth_accounts' });
-          if (accounts.length > 0) {
-            setAccount(accounts[0]);
-          }
-        } catch (error) {
-          console.error('Failed to load accounts', error);
-        }
-      }
-    };
 
-    checkIfWalletIsConnected();
-  }, []);
 
   const connectWallet = async () => {
+
     if (typeof window !== 'undefined' && typeof (window as any).ethereum !== 'undefined') {
       try {
         const accounts = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
