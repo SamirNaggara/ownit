@@ -2,7 +2,7 @@
 
 // hooks/useContract.ts
 import { ethers } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 declare global {
 	interface Window {
@@ -19,44 +19,36 @@ export const useContract = () => {
 	const [contract, setContract] = useState<ethers.Contract | null>(null);
 	const [showConnectModal, setShowConnectModal] = useState(false);
 
-	useEffect(() =>  {
-
-		const initContract = async () => {
-		
-		
-			if (typeof window !== 'undefined' && window.ethereum) {
-				try {
-				// Crée un nouveau provider Ethereum
-				const provider = new ethers.BrowserProvider(window.ethereum)
-				// Crée un signer
-				const signer = await provider.getSigner();
-				// Crée une instance du contrat avec le signer, qui permet d'envoyer des transactions
-				const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
-				setContract(contractInstance);
-				} catch (error) {
-					console.error("Failed to create contract instance:", error);
-				
-				}
-			}
-			else{
-				setShowConnectModal(true)
-				const currentUrl = window.location.href;
+	const initContract = useCallback(async () => {
+        if (typeof window !== 'undefined' && window.ethereum) {
+            try {
+                const provider = new ethers.BrowserProvider(window.ethereum);
+                const signer = await provider.getSigner();
+                const contractInstance = new ethers.Contract(contractAddress, contractABI, signer);
+                setContract(contractInstance);
+				return contractInstance
+            } catch (error) {
+                console.error('Error connecting to the contract:', error);
+            }
+        } else {
+            setShowConnectModal(true);
+			const currentUrl = window.location.href;
         		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
-			}
-		}
-		initContract()
-	}, []);
-  
-	return {contract, showConnectModal };
-  };
+        }
+    }, [contract]);
+
+    return { contract, showConnectModal, initContract };
+};
 
 export const useMintFunction = () => {
-  const contract = useContract().contract;
+	const { contract, initContract } = useContract();
 
   
   const mintNFT = async (to: string, url: string) => {
     if (!contract) {
-      return { success: false, error: 'Contract not loaded' };
+		await initContract();
+		if (!contract)
+      		return { success: false, error: 'Contract not loaded' };
     }
 
     // Générer un ID unique pour cet NFT en utilisant BigInt
@@ -82,14 +74,15 @@ export const useMintFunction = () => {
 };
 
 export const useGetProductState = () => {
-	const contract = useContract().contract;
+	const { contract, initContract } = useContract();
   
 	
 	const getProductState = async (tokenId: string) => {
-	  if (!contract) {
-		return -1;
-	  }
-  
+		if (!contract) {
+			await initContract();
+			if (!contract)
+				  return -1
+		}
 	  
 	  try {
 		// Appelle la fonction `sgetProduct state` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
@@ -107,20 +100,25 @@ export const useGetProductState = () => {
   };
 
 export const useSetProductState = () => {
-	const contract = useContract().contract
+	const { contract, initContract } = useContract();
+
 
 
 	const setProductState = async (tokenId: string, state: number) => {
-		
-		if (!contract) {
-				const currentUrl = window.location.href;
-        		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
-				return -1
+		let contractInstance = contract
+		if (!contractInstance) {
+			contractInstance = await initContract() as any;
+			if (!contractInstance)
+				{
+					return { success: false, error: 'Contract not loaded' };
+
+				}
 		}
+		
 		
 		try {
 			// Appelle la fonction `sgetProduct state` de ton contrat avec l'ID unique, l'adresse destinataire, et l'URL
-			const tx = await contract.setProductState(tokenId, state);
+			const tx = await contractInstance.setProductState(tokenId, state);
 			await tx.wait();
 			// Retourner un objet indiquant le succès et incluant l'ID du token
 			return { success: true, error: 'Done' };

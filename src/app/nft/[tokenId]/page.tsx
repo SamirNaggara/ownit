@@ -81,6 +81,7 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 	  
 
 	  const handleChangeProductState = (newState: number) => {
+
 		changeProductState(newState)
 	  }
 			 
