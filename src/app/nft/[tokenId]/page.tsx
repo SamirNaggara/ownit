@@ -76,17 +76,11 @@ export default function NFTPage({ params }: { params: { tokenId: string } }) {
 	  };
 	  
 	  function describeProductState(state: number): string {
-		console.log("state", state)
-		console.log("productStateValue", productStateValue)
 		return productStateDescriptions[state] || "État du produit inconnu.";
 	  }
 	  
 
 	  const handleChangeProductState = (newState: number) => {
-		if (isMobile && !window.ethereum) {
-			const currentUrl = window.location.href;
-        		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
-		}
 		changeProductState(newState)
 	  }
 			 
