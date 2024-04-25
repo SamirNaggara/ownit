@@ -1,17 +1,15 @@
 'use client';
 import React, { useState, ChangeEvent, FormEvent, useRef } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { contactShapeOne, contactShapeTwo } from '../../../../public';
 
 export default function S_contact() {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    name: '',
     email: '',
-    phone: '',
     message: '',
   });
+  const [isSubmited, setIsSubmited] = useState<boolean>(false)
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -25,18 +23,11 @@ export default function S_contact() {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+	setIsSubmited(true)
     // BACKEND HERE
   };
 
-  const handleCancel = () => {
-    setFormData({
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      message: '',
-    });
-  };
+  
 
   return (
     <div
@@ -46,22 +37,10 @@ export default function S_contact() {
         <div className="mb-5">
           <input
             type="text"
-            id="firstName"
-            name="firstName"
+            id="name"
+            name="name"
             placeholder="First Name*"
-            value={formData.firstName}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-4 border focus:outline-none focus:border-black/50 rounded-[15px] text-black placeholder-black text-[14px]"
-          />
-        </div>
-        <div className="mb-5">
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            placeholder="Last Name*"
-            value={formData.lastName}
+            value={formData.name}
             onChange={handleChange}
             required
             className="w-full px-3 py-4 border focus:outline-none focus:border-black/50 rounded-[15px] text-black placeholder-black text-[14px]"
@@ -74,18 +53,6 @@ export default function S_contact() {
             name="email"
             placeholder="Email*"
             value={formData.email}
-            onChange={handleChange}
-            required
-            className="w-full px-3 py-4 border focus:outline-none focus:border-black/50 rounded-[15px] text-black placeholder-black text-[14px]"
-          />
-        </div>
-        <div className="mb-5">
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            placeholder="Phone*"
-            value={formData.phone}
             onChange={handleChange}
             required
             className="w-full px-3 py-4 border focus:outline-none focus:border-black/50 rounded-[15px] text-black placeholder-black text-[14px]"
@@ -113,12 +80,6 @@ export default function S_contact() {
           />
         </div>
         <div className="flex justify-center gap-8 relative flex-wrap">
-          <button
-            type="button"
-            onClick={handleCancel}
-            className="px-4 py-4 bg-white text-black hover:border-black/50 border rounded-[15px] w-full">
-            Cancel
-          </button>
           <div className="relative w-full">
             <button
               type="submit"
@@ -138,6 +99,12 @@ export default function S_contact() {
               />
             </div>
           </div>
+		  {
+			isSubmited && (<p className="text-red-500">
+			Thank for your interest. This form has a technical issue, so please send an email to safeout.founder@gmail.com
+		  </p>)
+		  }
+			
         </div>
       </form>
     </div>
