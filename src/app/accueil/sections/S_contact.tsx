@@ -40,7 +40,7 @@ export default function S_contact() {
 
   return (
     <div
-      className="h-screen relative px-[10%] py-[5%] bg-gradient-home"
+      className="relative px-[10%] py-[5%] bg-gradient-home"
       id="contact">
       <form onSubmit={handleSubmit} className=" xl:w-[50%] mx-auto mt-[8%]">
         <div className="mb-5">

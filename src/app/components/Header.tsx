@@ -23,7 +23,7 @@ export default function Header() {
   return (
     <header
       className={`z-50 bg-white flex justify-between py-5 items-center px-[10%] ${
-        visible ? '' : 'fixed top-0 w-full shadow-lg'
+        visible ? '' : 'fixed top-0 w-full shadow-lg opacity-100 transition-opacity duration-300'
       }`}>
       <Link href="/" className="logo-container">
         <Image src={logo} alt="logo safeout" />

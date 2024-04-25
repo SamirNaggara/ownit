@@ -25,16 +25,18 @@ export default function Home() {
 			<S_stolen />
 			<S_contact />
 		</div>
-        <Link
-          href="/my-nfts"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto w-fit mt-5">
-          Mes NFT&apos;s
-        </Link>
-        <Link
-          href="/mint"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto w-fit mt-5">
-          Mint mon propre NFT
-        </Link>
+		<div className='mt-5 flex mb-10 max-w-xl mx-auto'>
+			<Link
+			href="/my-nfts"
+			className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto w-fit mt-5">
+			Mes NFT&apos;s
+			</Link>
+			<Link
+			href="/mint"
+			className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto w-fit mt-5">
+			Mint mon propre NFT
+			</Link>
+		</div>
     </main>
   );
 }
