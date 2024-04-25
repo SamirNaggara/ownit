@@ -26,7 +26,8 @@ export const WalletProvider: React.FC<{ children: ReactNode }> = ({ children }) 
         console.error('Error connecting to MetaMask', error);
       }
     } else {
-      alert('Please install MetaMask.');
+		const currentUrl = window.location.href;
+		window.location.href = `https://metamask.app.link/dapp/${currentUrl}`;
     }
   };
 
