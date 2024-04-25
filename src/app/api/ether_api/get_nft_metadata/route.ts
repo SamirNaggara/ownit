@@ -10,6 +10,27 @@ interface ApiResponse {
   error?: string;
 }
 
+function addOrUpdateToken(url: string, token: string | undefined): string {
+	// Construit le paramètre de token complet
+	if (!token) {
+	  return url;
+	}
+	const tokenParam = `pinataGatewayToken=${token}`;
+	
+	// Vérifie si l'URL contient déjà le paramètre
+	const urlObject = new URL(url);
+	if (urlObject.searchParams.has('pinataGatewayToken')) {
+	  // Supprime l'ancien token si présent
+	  urlObject.searchParams.delete('pinataGatewayToken');
+	}
+	
+	// Ajoute le nouveau token
+	urlObject.searchParams.append('pinataGatewayToken', token);
+	
+	return urlObject.toString();
+  }
+  
+
 export async function GET(req: NextRequest) {
   // Extraction du tokenId et de l'adresse du contrat depuis l'URL de la requête
   const tokenId = req.nextUrl.searchParams.get('tokenId') as string; // Cast en string pour s'assurer du type
@@ -44,8 +65,9 @@ export async function GET(req: NextRequest) {
 	  
 	  // Récupérer l'URI des métadonnées pour le tokenId spécifié
 	  const tokenBrut = await contract.tokenURI(tokenId);
-	  const tokenURI = tokenBrut.toString() + "?pinataGatewayToken=" + process.env.PINATA_GATEWAY;
+	  const tokenURI = addOrUpdateToken(tokenBrut.toString(), process.env.PINATA_GATEWAY);
 
+	  
 		if (!tokenURI) throw new Error('Failed to get token URI.');
 	  const productState  = (await contract.getProductState(tokenId)).toString();
 	  if (!productState) throw new Error('Failed to get product state.');
