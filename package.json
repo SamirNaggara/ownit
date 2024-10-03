@@ -17,6 +17,7 @@
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.5",
     "ethers": "^6.11.1",
+    "fs": "^0.0.1-security",
     "next": "13.4.5",
     "next-auth": "^4.22.1",
     "nodemailer": "^6.9.13",
@@ -32,6 +33,7 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-ignition": "^0.15.0",
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/nodemailer": "^6.4.16",
     "@types/uuid": "^9.0.8",
     "hardhat": "^2.22.2"
   }
