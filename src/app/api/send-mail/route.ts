@@ -6,8 +6,6 @@ export async function POST(req: NextRequest) {
   try {
     const { name, email, message } = await req.json();
 
-    console.log("je passe par la", name, email, message);
-
     // Configuration du transporteur SMTP avec Nodemailer
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
@@ -31,7 +29,6 @@ export async function POST(req: NextRequest) {
     });
 
     // Répondre avec succès
-    console.log("Email sent successfully!");
     return NextResponse.json(
       { message: "Email sent successfully!" },
       { status: 200 }
