@@ -1,15 +1,16 @@
-'use client';
-import React, { useState, ChangeEvent, FormEvent, useRef } from 'react';
-import Image from 'next/image';
-import { contactShapeOne, contactShapeTwo } from '../../../../public';
+import React, { useState, ChangeEvent, FormEvent } from "react";
+import Image from "next/image";
+import { contactShapeOne, contactShapeTwo } from "../../../../public";
 
 export default function S_contact() {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    name: "",
+    email: "",
+    message: "",
   });
-  const [isSubmited, setIsSubmited] = useState<boolean>(false)
+  const [isSubmited, setIsSubmited] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [successMessage, setSuccessMessage] = useState<string>("");
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -21,18 +22,38 @@ export default function S_contact() {
     });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-	setIsSubmited(true)
-    // BACKEND HERE
+    setIsSubmited(true);
+    setErrorMessage(""); // Réinitialiser les messages
+    setSuccessMessage("");
+
+    try {
+      const res = await fetch("/api/send-mail", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.status === 200) {
+        setSuccessMessage(
+          "Thank you for your interrest ! We will get back to you shortly."
+        );
+        setFormData({ name: "", email: "", message: "" }); // Réinitialiser le formulaire
+      } else {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to send email.");
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorMessage("There was a technical issue. Please try again later.");
+    }
   };
 
-  
-
   return (
-    <div
-      className="relative px-[10%] py-[5%] bg-gradient-home"
-      id="contact">
+    <div className="relative px-[10%] py-[5%] bg-gradient-home" id="contact">
       <form onSubmit={handleSubmit} className=" xl:w-[50%] mx-auto mt-[8%]">
         <div className="mb-5">
           <input
@@ -67,7 +88,8 @@ export default function S_contact() {
             onChange={handleChange}
             required
             className="w-full px-3 py-4 border focus:outline-none focus:border-black/50 rounded-[15px] text-black placeholder-black text-[14px]"
-            rows={4}></textarea>
+            rows={4}
+          ></textarea>
           <Image
             src={contactShapeOne}
             alt="shape one"
@@ -83,7 +105,8 @@ export default function S_contact() {
           <div className="relative w-full">
             <button
               type="submit"
-              className="z-10 relative px-4 py-4 bg-white/[.44] border-[1px] border-solid border-white backdrop-blur-lg text-white focus:outline-none hover:border-black/30 rounded-[15px] w-full">
+              className="z-10 relative px-4 py-4 bg-white/[.44] border-[1px] border-solid border-white backdrop-blur-lg text-white focus:outline-none hover:border-black/30 rounded-[15px] w-full"
+            >
               Confirm
             </button>
             <div className="absolute inset-0 z-0">
@@ -99,12 +122,14 @@ export default function S_contact() {
               />
             </div>
           </div>
-		  {
-			isSubmited && (<p className="text-red-500">
-			Thank for your interest. This form has a technical issue, so please send an email to safeout.founder@gmail.com
-		  </p>)
-		  }
-			
+          {isSubmited && (
+            <>
+              {successMessage && (
+                <p className="text-[green] text-xl">{successMessage}</p>
+              )}
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            </>
+          )}
         </div>
       </form>
     </div>
