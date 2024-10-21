@@ -1,6 +1,5 @@
 import React from "react";
 import SigninButton from "./SigninButton";
-import WalletButton from "./WalletButton";
 
 const Appbar = () => {
   return (
