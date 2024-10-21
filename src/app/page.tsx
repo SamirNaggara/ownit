@@ -27,7 +27,7 @@ export default function Home() {
       </div>
       <div className="mt-5 flex mb-10 max-w-xl mx-auto">
         <Link
-          href="https://app.safeout.io/product/sf:H4sIAAAAAAAAAwXBiREAIAgDsJWUx6Pj0B7sP4IJo_3YeQDUvtFuvLSswkjEMjkQP252ihYoAAAA"
+          href="https://app.safeout.io/product/sf:4e21d629c1bff9fd810aa1e7b90108b962f51044"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded block mx-auto w-fit mt-5"
         >
           Check the Proof Of Concept
